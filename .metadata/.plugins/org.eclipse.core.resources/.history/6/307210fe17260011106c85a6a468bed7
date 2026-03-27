@@ -1,0 +1,73 @@
+package cabbooking;
+
+class RideService {
+
+	static int totalRides = 0;
+	static final String COMPANY_NAME = "QuickCab";
+	final int BASE_FARE = 100;
+
+	public void bookRide(Customer customer, Driver driver, boolean paymentStatus) throws InvalidLocationException,
+			DriverNotAvailableException, DistanceLimitException, PaymentFailedException {
+
+		// validation methods call
+		validateLocation(customer);
+		checkDriver(driver);
+		checkDistance(customer);
+		processPayment(paymentStatus);
+
+		// ride creation logic
+		assignDriver(driver);
+		calculateFare(customer);
+
+		// update ride count
+		incrementRideCount();
+	}
+
+	public void validateLocation(Customer customer) throws InvalidLocationException {
+		
+		if(customer.getPickupLocation() == null || customer.getPickupLocation().isEmpty()) {
+            throw new InvalidLocationException("Invalid Pickup-Location");
+		}
+		if(customer.getDropLocation() == null ||  customer.getDropLocation().isEmpty() ) {
+			throw new InvalidLocationException("Invalid Drop-Location!");
+		}
+
+		// logic here
+	}
+
+	public void checkDriver(Driver driver) throws DriverNotAvailableException {
+		if(driver.isAvailable() ==  false) {
+			throw new DriverNotAvailableException("Driver is not available yet!");
+		}
+	}
+
+	public void checkDistance(Customer customer) throws DistanceLimitException {
+		if(customer.getDistance()<=0) {
+			throw new DistanceLimitException("Distance must be greater than 0");
+
+		}
+		if(customer.getDistance() >= 200) {
+			throw new DistanceLimitException("Distance exceeds service limit!");
+		}
+	}
+
+	public void processPayment(boolean paymentStatus) throws PaymentFailedException {
+		if(paymentStatus == false ) {
+			throw new PaymentFailedException("Payment Failed!!");
+		}
+	}
+
+	public void assignDriver(Driver driver) {
+		System.out.println("Driver "+driver.getDriverName()+" is assigned to you for your safe ride.");
+	}
+
+	public void calculateFare(Customer customer) {
+
+		// logic here
+	}
+
+	public static void incrementRideCount() {
+
+		// logic here
+	}
+}

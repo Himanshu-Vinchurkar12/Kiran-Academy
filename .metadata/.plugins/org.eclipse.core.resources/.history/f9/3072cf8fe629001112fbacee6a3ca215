@@ -1,0 +1,43 @@
+package com.OPS;
+
+public class OrderProcessing implements Runnable {
+	
+    private String orderId;
+
+    private static final Object lock = new Object();
+
+    public OrderProcessing(String orderId) {
+    	this.orderId = orderId;
+    }
+
+	@Override
+    public void run() {
+        try {
+        	System.out.println("Processing order: " + orderId);
+
+            System.out.println(orderId + " - Payment started");
+            Thread.sleep(1000);
+            System.out.println(orderId + " - Payment done");
+
+            packing();
+
+            System.out.println(orderId + " - Shipment started");
+            Thread.sleep(1000);
+            System.out.println(orderId + " - Shipped");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+	public static synchronized void packing() {
+        try {
+            System.out.println(Thread.currentThread().getName() + " - Packing started");
+            Thread.sleep(1500);
+            System.out.println(Thread.currentThread().getName() + " - Packing done");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}

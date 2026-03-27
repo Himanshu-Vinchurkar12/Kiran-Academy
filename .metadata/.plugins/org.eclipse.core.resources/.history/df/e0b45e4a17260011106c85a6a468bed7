@@ -1,0 +1,69 @@
+package cabbooking;
+
+class RideService {
+
+	static int totalRides = 0;
+	static final String COMPANY_NAME = "QuickCab";
+	final int BASE_FARE = 100;
+
+	public void bookRide(Customer customer, Driver driver, boolean paymentStatus) throws InvalidLocationException,
+			DriverNotAvailableException, DistanceLimitException, PaymentFailedException {
+
+		// validation methods call
+		validateLocation(customer);
+		checkDriver(driver);
+		checkDistance(customer);
+		processPayment(paymentStatus);
+
+		// ride creation logic
+		assignDriver(driver);
+		calculateFare(customer);
+
+		// update ride count
+		incrementRideCount();
+	}
+
+	public void validateLocation(Customer customer) throws InvalidLocationException {
+		
+		if(customer.getPickupLocation() == null || customer.getPickupLocation().isEmpty()) {
+            throw new InvalidLocationException("Invalid Pickup-Location");
+		}
+		if(customer.getDropLocation() == null ||  customer.getDropLocation().isEmpty() ) {
+			throw new InvalidLocationException("Invalid Drop-Location!");
+		}
+
+		// logic here
+	}
+
+	public void checkDriver(Driver driver) throws DriverNotAvailableException {
+		if(driver.isAvailable() ==  false) {
+			throw new DriverNotAvailableException("Driver is not Available yet!");
+		}
+	}
+
+	public void checkDistance(Customer customer) throws DistanceLimitException {
+		if(customer.getDistance() >= 200) {
+			throw new DistanceLimitException("Distance exceeds service limit!");
+		}
+	}
+
+	public void processPayment(boolean paymentStatus) throws PaymentFailedException {
+
+		// logic here
+	}
+
+	public void assignDriver(Driver driver) {
+
+		// logic here
+	}
+
+	public void calculateFare(Customer customer) {
+
+		// logic here
+	}
+
+	public static void incrementRideCount() {
+
+		// logic here
+	}
+}
